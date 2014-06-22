@@ -9,5 +9,6 @@
     <string name="title_activity_timeline">TimelineActivity</string>
     <string name="foo_label">\@foo</string>
     <string name="body_label">This is the tweet body</string>
+    <string name="sDefaultTime">Never</string>
 
 </resources>
