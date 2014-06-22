@@ -1,11 +1,11 @@
 package com.codepath.apps.basictwitter;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
-import java.text.ParseException;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;

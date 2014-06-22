@@ -1,5 +1,6 @@
 package com.codepath.apps.basictwitter;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -24,14 +25,23 @@ public class TimelineActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
 		client = TwitterApp.getRestClient();
-		populateTimeline();
+		populateTimeline(0);
 		lvTweets = (ListView)findViewById(R.id.lvTweets);
+		// Attach the listener to the AdapterView onCreate
+		lvTweets.setOnScrollListener(new EndlessScrollListener() {
+			
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				long maxId = tweets.get(totalItemsCount - 1).getUid();
+				populateTimeline(maxId);
+			}
+		});
 		tweets = new ArrayList<Tweet>();
 		aTweets = new TweetArrayAdapter(this, tweets);
 		lvTweets.setAdapter(aTweets);
 	}
 	
-	public void populateTimeline() {
+	public void populateTimeline(long maxId) {
 		client.GetHomeTimeline(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray json) {
@@ -43,6 +53,6 @@ public class TimelineActivity extends Activity {
 				Log.d("debug", e.toString());
 				Log.d("debug", s.toString());
 			}
-		});
+		}, maxId);
 	}
 }
