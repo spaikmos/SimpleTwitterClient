@@ -25,7 +25,6 @@ public class ComposeTweetActivity extends Activity {
 		setContentView(R.layout.activity_compose_tweet);
 		client = TwitterApp.getRestClient();
 		populateUserInfo();
-		//populateUserImage();
 	}
 	
 	public void onTweetClick(View view) {
@@ -36,8 +35,8 @@ public class ComposeTweetActivity extends Activity {
 			@Override
 			public void onSuccess(JSONObject json) {
 				Tweet tweet = Tweet.fromJSON(json);
-				Intent i = new Intent(ComposeTweetActivity.this, TimelineActivity.class);
-				//i.putExtra("tweet", tweet);
+				Intent i = new Intent();
+				i.putExtra("tweet", tweet);
 				setResult(RESULT_OK, i);
 				finish();
 			}
