@@ -4,6 +4,7 @@ import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -42,6 +43,27 @@ public class TwitterClient extends OAuthBaseClient {
     	}
     	client.get(apiUrl, params, handler);
     }
+    
+    public void GetAccountSettings(AsyncHttpResponseHandler handler) {
+    	String apiUrl = getApiUrl("account/settings.json");
+    	client.get(apiUrl, null, handler);
+    }
+    
+    public void PostUpdate(String tweetText, AsyncHttpResponseHandler handler) {
+    	String apiUrl = getApiUrl("statuses/update.json");
+    	RequestParams params = new RequestParams();
+    	params.put("status", tweetText);
+    	client.post(apiUrl, params, handler);
+    }
+    
+    public void GetUsers(String screenname, AsyncHttpResponseHandler handler) {
+    	String apiUrl = getApiUrl("users/show.json");
+    	RequestParams params = new RequestParams();
+    	Log.d("debug", "GetUsers screenname = " + screenname);
+    	params.put("screen_name", screenname);
+    	client.get(apiUrl, params, handler);
+    }
+    
     
     // CHANGE THIS
     // DEFINE METHODS for different API endpoints here
