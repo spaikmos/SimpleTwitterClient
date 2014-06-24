@@ -51,7 +51,7 @@ public class ComposeTweetActivity extends Activity {
 	}
 	
 	public void populateUserInfo() {
-		client.GetAccountSettings(new JsonHttpResponseHandler() {			
+		client.GetAccountCredentials(new JsonHttpResponseHandler() {			
 			@Override
 			public void onSuccess(JSONObject json) {
 				TextView tvScreenname = (TextView)findViewById(R.id.tvComposeScreenname);
@@ -59,33 +59,13 @@ public class ComposeTweetActivity extends Activity {
 				// Parse the JSON to get screenname
 				try {
 					screenname = json.getString("screen_name");
-					Log.d("debug", "Screenname = " + screenname);
-					
-					client.GetUsers(screenname, new JsonHttpResponseHandler() {
-						@Override
-						public void onSuccess(JSONObject json) {
-							try {
-								String name = json.getString("name");
-								String imageUrl = json.getString("profile_image_url");
-								Log.d("debug", "Name = " + name);
-								Log.d("debug", "ImgUrl = " + imageUrl);
-								TextView tvName = (TextView) findViewById(R.id.tvComposeName);
-								tvName.setText(name);
-								ImageView ivProfileImage = (ImageView) findViewById(R.id.ivComposeProfilePic);
-								ImageLoader imageLoader = ImageLoader.getInstance();
-								imageLoader.displayImage(imageUrl, ivProfileImage);
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-						}
-						
-						@Override
-						public void onFailure(Throwable e, String s) {
-							Log.d("debug", e.toString());
-							Log.d("debug", s.toString());
-						}
-					});
-
+					String name = json.getString("name");
+					String imageUrl = json.getString("profile_image_url");
+					TextView tvName = (TextView) findViewById(R.id.tvComposeName);
+					tvName.setText(name);
+					ImageView ivProfileImage = (ImageView) findViewById(R.id.ivComposeProfilePic);
+					ImageLoader imageLoader = ImageLoader.getInstance();
+					imageLoader.displayImage(imageUrl, ivProfileImage);					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
