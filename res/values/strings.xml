@@ -15,5 +15,6 @@
     <string name="btnTweet">TWEET</string>
     <string name="sDefaultName">Name</string>
     <string name="sDefaultScreenname">\@screenname</string>
+    <string name="sDefaultChar">140</string>
 
 </resources>

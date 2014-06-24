@@ -5,9 +5,13 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +22,37 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ComposeTweetActivity extends Activity {
 	private TwitterClient client;
+	private TextView tvCharRem;
+	private EditText etTweet;
+	private Button btnTweet;
+	private Boolean isClickable = true;
+	private final TextWatcher twCompose = new TextWatcher() {
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {			
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			int remLen = 140 - s.length();
+			tvCharRem.setText(String.valueOf(remLen));
+			
+			if(remLen < 0 && isClickable) {
+				isClickable = false;
+				tvCharRem.setTextColor(Color.RED);
+				btnTweet.setClickable(false);
+			} else if (remLen > 0 && isClickable == false) {
+				isClickable = true;
+				tvCharRem.setTextColor(Color.BLUE);
+				btnTweet.setClickable(true);
+			}
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {			
+		}
+		
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +60,13 @@ public class ComposeTweetActivity extends Activity {
 		setContentView(R.layout.activity_compose_tweet);
 		client = TwitterApp.getRestClient();
 		populateUserInfo();
+		etTweet = (EditText) findViewById(R.id.etTweet);
+		tvCharRem = (TextView) findViewById(R.id.tvCharRem);
+		btnTweet = (Button) findViewById(R.id.btnTweet);
+		etTweet.addTextChangedListener(twCompose);
 	}
 	
 	public void onTweetClick(View view) {
-		EditText etTweet = (EditText) findViewById(R.id.etTweet);
 		String tweetText = etTweet.getText().toString();
 		
 		client.PostUpdate(tweetText, new JsonHttpResponseHandler() {			
