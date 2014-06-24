@@ -68,8 +68,8 @@ public class TimelineActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.d("debug", "onActivityResult");
 		if (resultCode == RESULT_OK && requestCode == COMPOSE_REQUEST) {
-			//Tweet tweet = (Tweet) data.getParcelableExtra("tweet");
-			Log.d("debug", "Inserting tweet into arraylist");
+			Tweet tweet = (Tweet) data.getParcelableExtra("tweet");
+			Log.d("debug", "Inserting tweet into arraylist" + tweet.getBody());
 			//aTweets.insert(tweet, 0);
 			//lvTweets.setSelection(0);
 		}
