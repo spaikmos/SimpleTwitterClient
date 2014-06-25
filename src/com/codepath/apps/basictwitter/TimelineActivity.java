@@ -11,18 +11,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.codepath.apps.basictwitter.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
+
+import eu.erikw.PullToRefreshListView;
+import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class TimelineActivity extends Activity {
 	static final int COMPOSE_REQUEST = 1234;
 	private TwitterClient client;
 	private ArrayList<Tweet> tweets;
 	private ArrayAdapter<Tweet> aTweets;
-	//private PullToRefreshListView lvTweets;
-	private ListView lvTweets;
+	private PullToRefreshListView lvTweets;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +31,29 @@ public class TimelineActivity extends Activity {
 		setContentView(R.layout.activity_timeline);
 		client = TwitterApp.getRestClient();
 		populateTimeline(0, 1);
-		lvTweets = (ListView) findViewById(R.id.lvTweets);
-		//lvTweets = (PullToRefreshListView) findViewById(R.id.lvTweets);
+		lvTweets = (PullToRefreshListView) findViewById(R.id.lvTweets);
 		// Attach the listener to the AdapterView onCreate
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {
 
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
-				long maxId = tweets.get(totalItemsCount - 1).getUid();
-				populateTimeline(maxId, 0);
+				// WTF?!?!  After adding PullToRefresh, the total items count seems to be
+				//	1 greater than it used to.  Something is messed up here.
+				if(totalItemsCount > 1) {
+					long maxId = tweets.get(totalItemsCount - 2).getUid();
+					populateTimeline(maxId, 0);
+				}
 			}
 		});
-		/*
+
 		lvTweets.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				//fetchTimelineAsync();
+				fetchTimelineAsync();
+				lvTweets.onRefreshComplete();
 			}
 		});
-		*/
+		
 		tweets = new ArrayList<Tweet>();
 		aTweets = new TweetArrayAdapter(this, tweets);
 		lvTweets.setAdapter(aTweets);

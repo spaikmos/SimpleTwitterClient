@@ -4,14 +4,8 @@
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
 
-    <!--
+    
     <eu.erikw.PullToRefreshListView
-        android:id="@+id/lvTweets"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent" />
-    -->
-
-    <ListView
         android:id="@+id/lvTweets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
