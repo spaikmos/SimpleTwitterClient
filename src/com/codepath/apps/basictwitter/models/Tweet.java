@@ -101,7 +101,7 @@ public class Tweet implements Parcelable {
 		body = in.readString();
 		uid = in.readLong();
 		createdAt = in.readString();
-		user = in.readParcelable(((Object) user).getClass().getClassLoader());
+		user = in.readParcelable(User.class.getClassLoader());
 	}
 	
 	public Tweet() {

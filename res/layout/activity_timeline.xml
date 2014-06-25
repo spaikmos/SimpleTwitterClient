@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
 
+    <!--
+    <eu.erikw.PullToRefreshListView
+        android:id="@+id/lvTweets"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent" />
+    -->
+
     <ListView
         android:id="@+id/lvTweets"
         android:layout_width="match_parent"
@@ -11,8 +18,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" >
-
-    </ListView>
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

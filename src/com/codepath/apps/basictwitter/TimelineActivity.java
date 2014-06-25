@@ -21,24 +21,34 @@ public class TimelineActivity extends Activity {
 	private TwitterClient client;
 	private ArrayList<Tweet> tweets;
 	private ArrayAdapter<Tweet> aTweets;
+	//private PullToRefreshListView lvTweets;
 	private ListView lvTweets;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
 		client = TwitterApp.getRestClient();
-		populateTimeline(0);
+		populateTimeline(0, 1);
 		lvTweets = (ListView) findViewById(R.id.lvTweets);
+		//lvTweets = (PullToRefreshListView) findViewById(R.id.lvTweets);
 		// Attach the listener to the AdapterView onCreate
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {
 
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
 				long maxId = tweets.get(totalItemsCount - 1).getUid();
-				populateTimeline(maxId);
+				populateTimeline(maxId, 0);
 			}
 		});
+		/*
+		lvTweets.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				//fetchTimelineAsync();
+			}
+		});
+		*/
 		tweets = new ArrayList<Tweet>();
 		aTweets = new TweetArrayAdapter(this, tweets);
 		lvTweets.setAdapter(aTweets);
@@ -70,8 +80,8 @@ public class TimelineActivity extends Activity {
 		if (resultCode == RESULT_OK && requestCode == COMPOSE_REQUEST) {
 			Tweet tweet = (Tweet) data.getParcelableExtra("tweet");
 			Log.d("debug", "Inserting tweet into arraylist" + tweet.getBody());
-			//aTweets.insert(tweet, 0);
-			//lvTweets.setSelection(0);
+			aTweets.insert(tweet, 0);
+			lvTweets.setSelection(0);
 		}
 	}
 
@@ -81,8 +91,8 @@ public class TimelineActivity extends Activity {
 		startActivityForResult(i, COMPOSE_REQUEST);
 	}
 
-	public void populateTimeline(long maxId) {
-		client.GetHomeTimeline(new JsonHttpResponseHandler() {
+	public void populateTimeline(long maxId, long sinceId) {
+		client.GetHomeTimeline(maxId, sinceId, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray json) {
 				aTweets.addAll(Tweet.fromJSONArray(json));
@@ -93,6 +103,23 @@ public class TimelineActivity extends Activity {
 				Log.d("debug", e.toString());
 				Log.d("debug", s.toString());
 			}
-		}, maxId);
+		});
+	}
+	
+	public void fetchTimelineAsync() {
+		long sinceId = tweets.get(0).getUid();
+		
+		client.GetHomeTimeline(0, sinceId, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONArray json) {
+				aTweets.addAll(Tweet.fromJSONArray(json));
+			}
+
+			@Override
+			public void onFailure(Throwable e, String s) {
+				Log.d("debug", e.toString());
+				Log.d("debug", s.toString());
+			}
+		});
 	}
 }
