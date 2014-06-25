@@ -117,7 +117,13 @@ public class TimelineActivity extends Activity {
 		client.GetHomeTimeline(0, sinceId, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray json) {
-				aTweets.addAll(Tweet.fromJSONArray(json));
+				ArrayList<Tweet> newTweets = Tweet.fromJSONArray(json);
+				
+				// Insert new tweets at the beginning of the list
+				// Is there a better way to do this?  
+				for (int i=0; i<newTweets.size(); i++) {
+					aTweets.insert(newTweets.get(i),  i);
+				}
 			}
 
 			@Override
