@@ -27,8 +27,7 @@ Completed user stories:
 
 Release Notes:
 
-I'm sorry.  This is the lamest Image Search app you will see.  I just had enough time to do the bare minimum, and nothing more.
-Future apps will be better - I hope...
+Barely functional Twitter app.
 
 Implementation Notes:
 
