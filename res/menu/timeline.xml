@@ -7,5 +7,10 @@
         android:icon="@drawable/ic_action_compose"
         android:showAsAction="ifRoom"
         android:title="@string/action_compose"/>
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_profile"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_profile"/>
 
 </menu>

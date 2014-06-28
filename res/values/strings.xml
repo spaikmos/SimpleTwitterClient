@@ -16,5 +16,7 @@
     <string name="sDefaultName">Name</string>
     <string name="sDefaultScreenname">\@screenname</string>
     <string name="sDefaultChar">140</string>
+    <string name="action_profile">Profile</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

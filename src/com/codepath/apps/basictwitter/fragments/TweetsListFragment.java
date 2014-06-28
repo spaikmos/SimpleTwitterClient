@@ -34,6 +34,7 @@ public class TweetsListFragment extends Fragment {
 	//	I wanted to use an enum but that didn't work
 	protected static final int HOME_TIMELINE = 1;
 	protected static final int MENTIONS_TIMELINE = 2;
+	protected static final int USER_TIMELINE = 3;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,10 @@ public class TweetsListFragment extends Fragment {
 			client.GetMentionsTimeline(0, sinceId, handler);
 			break;
 			
+		case USER_TIMELINE:
+			client.GetUserTimeline(0,  sinceId,  handler);
+			break;
+			
 		default:
 			// throw an exception?
 			break;
@@ -138,6 +143,10 @@ public class TweetsListFragment extends Fragment {
 			
 		case MENTIONS_TIMELINE:
 			client.GetMentionsTimeline(maxId, sinceId, handler);
+			break;
+			
+		case USER_TIMELINE:
+			client.GetUserTimeline(maxId, sinceId, handler);
 			break;
 			
 		default:

@@ -4,7 +4,6 @@ import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -59,7 +58,6 @@ public class TwitterClient extends OAuthBaseClient {
 
 	private void GetGenericTimeline(String timelineName, long maxId, long sinceId, JsonHttpResponseHandler handler) {
     	String apiUrl = getApiUrl("statuses/" + timelineName + "_timeline.json");
-    	Log.d("debug", "apiUrl = " + apiUrl);
     	RequestParams params = new RequestParams();
     	if(sinceId != 0) {
         	params.put("since_id",  String.valueOf(sinceId));

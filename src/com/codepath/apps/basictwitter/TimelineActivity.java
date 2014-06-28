@@ -15,7 +15,8 @@ import com.codepath.apps.basictwitter.listeners.FragmentTabListener;
 import com.codepath.apps.basictwitter.models.Tweet;
 
 public class TimelineActivity extends FragmentActivity {
-	static final int COMPOSE_REQUEST = 1234;
+	static final int COMPOSE_REQUEST = 1;
+	static final int PROFILE_REQUEST = 2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,9 @@ public class TimelineActivity extends FragmentActivity {
 		case R.id.action_compose:
 			composeMessage();
 			return true;
+		case R.id.action_profile:
+			onProfileView();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 
@@ -56,9 +60,13 @@ public class TimelineActivity extends FragmentActivity {
 	}
 
 	public void composeMessage() {
-		Intent i = new Intent(getApplicationContext(),
-				ComposeTweetActivity.class);
+		Intent i = new Intent(this, ComposeTweetActivity.class);
 		startActivityForResult(i, COMPOSE_REQUEST);
+	}
+	
+	public void onProfileView() {
+		Intent i = new Intent(this, ProfileActivity.class);
+		startActivityForResult(i, PROFILE_REQUEST);
 	}
 
 	private void setupTabs() {
