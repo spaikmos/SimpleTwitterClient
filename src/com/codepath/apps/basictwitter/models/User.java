@@ -12,6 +12,10 @@ public class User implements Parcelable {
 	private String screenName;
 	private String profileImageUrl;
 	
+	private long followersCnt;
+	private long followingCnt;
+	private String tagLine;
+	
 
 	public static User fromJSON(JSONObject jsonObject) {
 		User u = new User();
@@ -20,6 +24,12 @@ public class User implements Parcelable {
 			u.uid = jsonObject.getLong("id");
 			u.screenName = jsonObject.getString("screen_name");
 			u.profileImageUrl = jsonObject.getString("profile_image_url");
+			
+			u.followersCnt = jsonObject.getLong("followers_count");
+			u.followingCnt = jsonObject.getLong("friends_count");
+			
+			JSONObject status = jsonObject.getJSONObject("status");
+			u.tagLine = status.getString("text");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -30,11 +40,9 @@ public class User implements Parcelable {
 		return name;
 	}
 
-
 	public long getUid() {
 		return uid;
 	}
-
 
 	public String getScreenName() {
 		return screenName;
@@ -43,6 +51,18 @@ public class User implements Parcelable {
 
 	public String getProfileImageUrl() {
 		return profileImageUrl;
+	}
+	
+	public long getFollowersCount() {
+		return followersCnt;
+	}
+	
+	public long getFollowingCount() {
+		return followingCnt;
+	}
+	
+	public String getTagline() {
+		return tagLine;
 	}
 
 	@Override
