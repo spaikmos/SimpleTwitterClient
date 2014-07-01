@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -18,9 +21,11 @@ import com.codepath.apps.basictwitter.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
+	private Context appContext;
+	
 	public TweetArrayAdapter(Context context, List<Tweet> tweets) {
 		super(context, 0, tweets);
-		// TODO Auto-generated constructor stub
+		appContext = context;
 	}
 
 	@Override
@@ -48,8 +53,22 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		tvUserName.setText(tweet.getUser().getScreenName());
 		tvBody.setText(tweet.getBody());
 		tvRelativeTimestamp.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
+		// Set OnClickListener for ImageView:
+		ivProfileImage.setTag(tweet.getUser().getScreenName());
+		ivProfileImage.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getContext(), ProfileActivity.class);
+				i.putExtra("screenname", (String) v.getTag());
+				appContext.startActivity(i);
+			}
+
+		});
+
 		return v;
 	}
+	
 	
 	// getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
 	public String getRelativeTimeAgo(String rawJsonDate) {

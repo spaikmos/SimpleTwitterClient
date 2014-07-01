@@ -4,6 +4,7 @@ import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -33,11 +34,12 @@ public class TwitterClient extends OAuthBaseClient {
     }
     
     public void GetHomeTimeline(long maxId, long sinceId, JsonHttpResponseHandler handler) {
-    	GetGenericTimeline("home", maxId, sinceId, handler);
+    	GetGenericTimeline("home", maxId, sinceId, null, handler);
     }
     
     public void GetAccountCredentials(JsonHttpResponseHandler handler) {
     	String apiUrl = getApiUrl("account/verify_credentials.json");
+		Log.d("debug", "url - " + apiUrl.toString());
     	client.get(apiUrl, null, handler);
     }
     
@@ -49,14 +51,21 @@ public class TwitterClient extends OAuthBaseClient {
     }
 
 	public void GetMentionsTimeline(long maxId, long sinceId, JsonHttpResponseHandler handler) {
-		GetGenericTimeline("mentions", maxId, sinceId, handler);
+		GetGenericTimeline("mentions", maxId, sinceId, null, handler);
 	}
     
-	public void GetUserTimeline(long maxId, long sinceId, JsonHttpResponseHandler handler) {
-		GetGenericTimeline("user", maxId, sinceId, handler);
+	public void GetUsersShow(String screenname, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("users/show.json");
+		RequestParams params = new RequestParams();
+		params.put("screen_name", screenname);
+		client.get(apiUrl, params, handler);
+	}
+	
+	public void GetUserTimeline(long maxId, long sinceId, String screenname, JsonHttpResponseHandler handler) {
+		GetGenericTimeline("user", maxId, sinceId, screenname, handler);
 	}
 
-	private void GetGenericTimeline(String timelineName, long maxId, long sinceId, JsonHttpResponseHandler handler) {
+	private void GetGenericTimeline(String timelineName, long maxId, long sinceId, String screenname, JsonHttpResponseHandler handler) {
     	String apiUrl = getApiUrl("statuses/" + timelineName + "_timeline.json");
     	RequestParams params = new RequestParams();
     	if(sinceId != 0) {
@@ -65,6 +74,10 @@ public class TwitterClient extends OAuthBaseClient {
     	
     	if(maxId != 0) {
     		params.put("max_id", String.valueOf(maxId));
+    	}
+    	
+    	if(screenname != null) {
+    		params.put("screen_name", screenname);
     	}
     	client.get(apiUrl, params, handler);
 	}

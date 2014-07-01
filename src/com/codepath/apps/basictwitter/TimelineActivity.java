@@ -16,7 +16,6 @@ import com.codepath.apps.basictwitter.models.Tweet;
 
 public class TimelineActivity extends FragmentActivity {
 	static final int COMPOSE_REQUEST = 1;
-	static final int PROFILE_REQUEST = 2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,7 @@ public class TimelineActivity extends FragmentActivity {
 	
 	public void onProfileView() {
 		Intent i = new Intent(this, ProfileActivity.class);
-		startActivityForResult(i, PROFILE_REQUEST);
+		startActivity(i);
 	}
 
 	private void setupTabs() {
