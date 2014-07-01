@@ -65,7 +65,7 @@ public class TweetsListFragment extends Fragment {
 				// seems to be
 				// 1 greater than it used to. Something is messed up here.
 				if (totalItemsCount > 1) {
-					long maxId = tweets.get(totalItemsCount - 2).getUid();
+					long maxId = tweets.get(totalItemsCount - 2).getUid() - 1;
 					populateTimeline(maxId, 0);
 				}
 			}

@@ -2,7 +2,7 @@
 
 Extend the simple twitter app.
 
-Time spent:  xyz hours.
+Time spent:  13 hours.
 
 Completed user stories:
 
