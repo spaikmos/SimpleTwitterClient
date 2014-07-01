@@ -59,14 +59,13 @@
             android:text="5 Following" />
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/fragmentUserTimeline"
-        android:name="com.codepath.apps.basictwitter.fragments.UserTimelineFragment"
+    <FrameLayout
+        android:id="@+id/flUserTimelineFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/llCounts"
-        tools:layout="@layout/fragment_tweets_list" />
+        android:layout_below="@+id/llCounts" >
+    </FrameLayout>
 
 </RelativeLayout>

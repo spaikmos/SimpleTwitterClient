@@ -14,9 +14,9 @@ Completed user stories:
  * [ ] Optional: Implement tabs in a gingerbread-compatible approach
  * [x] User can navigate to view their own profile
  * [x] User can see picture, tagline, # of followers, # of following, and tweets on their profile.
- * [ ] User can click on the profile image in any tweet to see another user's profile.
- * [ ] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
- * [ ] Profile view should include that user's timeline
+ * [x] User can click on the profile image in any tweet to see another user's profile.
+ * [x] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+ * [x] Profile view should include that user's timeline
  * [ ] Optional: User can view following / followers list through the profile
  * [ ] Advanced: Robust error handling, check if internet is available, handle error cases, network failures
  * [ ] Advanced: When a network request is sent, user sees an indeterminate progress indicator

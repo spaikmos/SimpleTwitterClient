@@ -4,10 +4,12 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.apps.basictwitter.fragments.UserTimelineFragment;
 import com.codepath.apps.basictwitter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -21,6 +23,15 @@ public class ProfileActivity extends FragmentActivity {
 		String screenname = getIntent().getStringExtra("screenname");
 		setContentView(R.layout.activity_profile);
 		loadProfileInfo(screenname);
+		
+		// Begin the transaction
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		// Replace the container with the new fragment
+		UserTimelineFragment userFragment = UserTimelineFragment.newInstance(screenname);
+		ft.add(R.id.flUserTimelineFragment, userFragment);
+		// or ft.add(R.id.your_placeholder, new FooFragment());
+		// Execute the changes specified
+		ft.commit();
 	}
 
 	private void loadProfileInfo(String screenname) {
