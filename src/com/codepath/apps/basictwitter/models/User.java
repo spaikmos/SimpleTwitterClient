@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 public class User implements Parcelable {
 	private String name;
 	private long uid;

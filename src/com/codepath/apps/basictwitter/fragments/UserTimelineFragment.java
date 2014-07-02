@@ -1,7 +1,6 @@
 package com.codepath.apps.basictwitter.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 
 public class UserTimelineFragment extends TweetsListFragment {
 	@Override

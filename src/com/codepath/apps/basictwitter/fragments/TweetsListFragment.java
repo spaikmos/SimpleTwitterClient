@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 
 import com.codepath.apps.basictwitter.EndlessScrollListener;
 import com.codepath.apps.basictwitter.R;
@@ -28,6 +29,7 @@ public class TweetsListFragment extends Fragment {
 	private ArrayAdapter<Tweet> aTweets;
 	private PullToRefreshListView lvTweets;
 	private TwitterClient client;
+	private ProgressBar pb;
 	private int timelineType;
 	private String screenname;
 
@@ -55,6 +57,8 @@ public class TweetsListFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_tweets_list, container,
 				false);
 		// Assign our view references
+		pb = (ProgressBar) v.findViewById(R.id.timelineProgressBar);
+		pb.setVisibility(View.VISIBLE);
 		lvTweets = (PullToRefreshListView) v.findViewById(R.id.lvTweets);
 		// Attach the listener to the AdapterView onCreate
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {
