@@ -57,8 +57,6 @@ public class TweetsListFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_tweets_list, container,
 				false);
 		// Assign our view references
-		pb = (ProgressBar) v.findViewById(R.id.timelineProgressBar);
-		pb.setVisibility(View.VISIBLE);
 		lvTweets = (PullToRefreshListView) v.findViewById(R.id.lvTweets);
 		// Attach the listener to the AdapterView onCreate
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {
